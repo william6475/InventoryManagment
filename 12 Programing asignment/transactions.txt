@@ -1,0 +1,8 @@
+
+1,banana,StockIncrease: 6,17,QuntityUpdate
+2,banana,StockIncrease: 3,20,QuntityUpdate
+3,banana,Sold: 2,18,QuntityUpdate
+4,pomegrannite,Null,7,AddItem
+5,banana,StockIncrease: 3,21,QuntityUpdate
+6,banana,Null,3,AddItem
+7,apple,Null,3,AddItem
