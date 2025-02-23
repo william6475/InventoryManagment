@@ -10,3 +10,18 @@
 9,banana,StockIncrease: 5,30,QuntityUpdate
 10,banana,Sold: 2,28,QuntityUpdate
 11,DragonFruit,Null,3,AddItem
+12,banana,StockIncrease: 2,30,QuntityUpdate
+13,pomegranite,Null,8,AddItem
+14,banana,Null,2,AddItem
+15,apple,Null,2,AddItem
+16,pear,Null,6,AddItem
+17,banana,StockIncrease: 2,4,QuntityUpdate
+18,tambourine,Null,3,AddItem
+19,to,Null,3,AddItem
+20,to,Null,Null,RemoveItem
+21,grapes,Null,6,AddItem
+22,grapes,Null,7,AddItem
+23,grapes,Null,9,AddItem
+00024,banana,Null,2,AddItem
+00025,peir,Null,2222,AddItem
+00026,banana,Sold: 1,1,QuntityUpdate
