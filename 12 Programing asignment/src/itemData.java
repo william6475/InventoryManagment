@@ -69,7 +69,7 @@ public class itemData
 
             System.out.println("\n\n Thanks for using this program...!");
         }
-        catch(java.util.InputMismatchException banana){//If the user inputs the wrong datatype
+        catch(java.util.InputMismatchException inputMismatchException){//If the user inputs the wrong datatype
             System.out.println("The entered information is was not valid. Please enter a number from 1-6");
             String[] itemDataArgument = {""};//creates a string array to parse to main method
             itemData.main(itemDataArgument);//returns to main method
@@ -78,14 +78,14 @@ public class itemData
 }
 class inventory{//Includes the methods which perform operations(update quntity, search, daily report, add item, remove item)
     public void updateQuntity(){//updates the quntity of an item
-        String productUpdateName = "banana";
-        String increaseOrDecrease = "banana";
+        String productUpdatedescription = "";
+        String increaseOrDecrease = "";
         int magnitudeOfChange = 34;
         try {//take user input
             Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
             System.out.println("Update quntity");
-            System.out.println("Please enter the name of the product to update the quntity of:");
-            productUpdateName = input.nextLine();//takes the input of the name of the product that the user wants to update the quntity of
+            System.out.println("Please enter the description of the product to update the quntity of:");
+            productUpdatedescription = input.nextLine();//takes the input of the description of the product that the user wants to update the quntity of
 
             System.out.println("Do you want to increase or decrease the quntity in stock(i/d):");
             increaseOrDecrease = input.nextLine();//takes user input as to weather they want to increase or deacrease stock level
@@ -93,7 +93,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             System.out.println("How much do you want to increase/decrease the quntity in stock by:");
             magnitudeOfChange = input.nextInt();//takes input of how much the user wants to change the stock by
         }
-        catch(java.util.InputMismatchException banana){//If the user inputs the wrong datatype
+        catch(java.util.InputMismatchException inputMismatchException){//If the user inputs the wrong datatype
             System.out.println("The entered information is was not valid. Please enter the amount you want to change the quntity by as a number");
             String[] itemDataArgument = {""};//creates a string array to parse to main method
             itemData.main(itemDataArgument);//returns to main method
@@ -107,14 +107,14 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             int lineNum = 1;//will store the line number of the line that will be updated
             while (lineContents != null)//while line is not empty
                 {//goes through  each line of items.txt searching for the string that the user entered untill an empty line is hit or the string is found
-                    if (lineContents.contains("," + productUpdateName + ",")) {
+                    if (lineContents.contains("," + productUpdatedescription + ",")) {
                         wasFound = true;
                         break;
                     }
                     lineContents = buffRead.readLine();//sets LineContents to the contents of the next line
                     lineNum++;//updates the line number to the new line
                 }
-            if (wasFound == true) {//if the name was found then atempt to update the item quntity
+            if (wasFound == true) {//if the descriptione was found then atempt to update the item quntity
                 String[] values = lineContents.split("\\s*,\\s*");//puts each of the lines values into an array
                 int quntity = Integer.parseInt(values[3]);//set quntity to the stocklevel in integer form
                 String plusOrMinus = "";//will be used to indicate in transactions.txt weather the stock increased or decreased
@@ -206,8 +206,8 @@ class inventory{//Includes the methods which perform operations(update quntity, 
     }
     public void search() {//searches for and displays details about an item
         Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
-        System.out.println("Please enter the name of the item that you want to search for:");
-        String productNameSearch = input.nextLine();//takes input from the user as to what item they want to search for
+        System.out.println("Please enter the description of the item that you want to search for:");
+        String productdescriptionSearch = input.nextLine();//takes input from the user as to what item they want to search for
 
         try {//Searches items.txt line by line for the string that the user inputed
             FileReader read = new FileReader("items.txt");
@@ -216,7 +216,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             boolean wasFound = false;//will store weather the string was found
             while (lineContents != null)//while line is not empty
             {//goes through  each line of items.txt searching for the string that the user entered untill an empty line is hit or the string is found
-                if (lineContents.contains("," + productNameSearch + ",")) {
+                if (lineContents.contains("," + productdescriptionSearch + ",")) {
                     wasFound = true;
                     break;
                 }
@@ -236,21 +236,27 @@ class inventory{//Includes the methods which perform operations(update quntity, 
         itemData.main(itemDataArgument);//returns to main method
     }
     public void addItem() {//adds an item catagory to the database
-        String nameAdd = "";
+        String descriptionAdd = "";
         float priceAdd = 1f;
         int stockAdd = 1;
         try {
             Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
-            System.out.println("Please enter the name of the item that you want to add:");
-            nameAdd = input.nextLine();//takes input on the name of the item to add
+            System.out.println("Please enter the description of the item that you want to add:");
+            descriptionAdd = input.nextLine();//takes input on the description of the item to add
 
             System.out.println("please enter the price of the item that you want to add:");
             priceAdd = input.nextFloat();//takes input on the price of the item to add
 
             System.out.println("What is the current stocklevel of the item that you are adding:");
             stockAdd = input.nextInt();//takes input on the current stocklevel of the item to add
+
+            if(descriptionAdd.contains(",")){
+                System.out.println("Item descrptions can't include commas\n");
+                inventory restart = new inventory();
+                restart.addItem();
+            }
         }
-        catch(java.util.InputMismatchException banana){//If the user inputs the wrong datatype
+        catch(java.util.InputMismatchException inputMismatchException){//If the user inputs the wrong datatype
             System.out.println("The entered information is was not valid. Please enter the amount you want to change the quntity by as a number");
             String[] itemDataArgument = {""};//creates a string array to parse to main method
             itemData.main(itemDataArgument);//returns to main method
@@ -273,7 +279,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
 
         try{//appends the new item to items.txt
             FileWriter write = new FileWriter("items.txt", true);
-            write.write(System.getProperty( "line.separator" ) + fullIdAdd + "," + nameAdd + "," + priceAdd + "," + stockAdd + "," + totalPriceAdd);//add the new item to items.txt
+            write.write(System.getProperty( "line.separator" ) + fullIdAdd + "," + descriptionAdd + "," + priceAdd + "," + stockAdd + "," + totalPriceAdd);//add the new item to items.txt
             write.close();//closes items.txt
             System.out.println("item added");
         }
@@ -293,7 +299,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             fullIdAdd2 = numZeros[stringIdAdd.length()] + idAdd2;//Adds the 0s to the id ad stores it in the varibale fullIdAdd
 
             FileWriter writeTransactions = new FileWriter("transactions.txt", true);//creates a FileWriter to append to transactions.txt
-            writeTransactions.write(System.getProperty( "line.separator" ) + fullIdAdd2 + "," + nameAdd + "," + "Null" + "," + stockAdd + "," + "AddItem");//add the log to transactions.txt
+            writeTransactions.write(System.getProperty( "line.separator" ) + fullIdAdd2 + "," + descriptionAdd + "," + "Null" + "," + stockAdd + "," + "AddItem");//add the log to transactions.txt
             writeTransactions.close();//closes transactions.txt
         }
         catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
@@ -307,8 +313,8 @@ class inventory{//Includes the methods which perform operations(update quntity, 
     }
     public void removeItem() {//removes an item catagory from the database
         Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
-        System.out.println("Please enter the name of the item that you wish to remove:");
-        String nameRemove = input.nextLine();//takes the user input of the name of the item to remove
+        System.out.println("Please enter the description of the item that you wish to remove:");
+        String descriptionRemove = input.nextLine();//takes the user input of the description of the item to remove
 
         try {//Searches items.txt line by line for the string that the user inputed
             FileReader read = new FileReader("items.txt");
@@ -319,7 +325,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             while (lineContents != null)//while line is not empty
             {//goes through  each line of items.txt searching for the string that the user entered untill an empty line is hit or the string is found
                 LineNum++;//increament LineNum to the current line being examined
-                if (lineContents.contains("," + nameRemove + ",")) {
+                if (lineContents.contains("," + descriptionRemove + ",")) {
                     wasFound = true;
                     break;
                 }
@@ -354,7 +360,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                     fullIdAdd = numZeros[stringIdAdd.length()] + idAdd;//Adds the 0s to the id ad stores it in the varibale fullIdAdd
 
                     FileWriter writeTransactions = new FileWriter("transactions.txt", true);//creates a FileWriter to append to transactions.txt
-                    writeTransactions.write(System.getProperty( "line.separator" ) + fullIdAdd + "," + nameRemove + "," + "Null" + "," + "Null" + "," + "RemoveItem");//add the log to transactions.txt
+                    writeTransactions.write(System.getProperty( "line.separator" ) + fullIdAdd + "," + descriptionRemove + "," + "Null" + "," + "Null" + "," + "RemoveItem");//add the log to transactions.txt
                     writeTransactions.close();//closes transactions.txt
                 }
                 catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
