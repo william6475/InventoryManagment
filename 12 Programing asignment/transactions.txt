@@ -25,3 +25,4 @@
 00024,banana,Null,2,AddItem
 00025,peir,Null,2222,AddItem
 00026,banana,Sold: 1,1,QuntityUpdate
+00027,pomegranite,Null,7,AddItem

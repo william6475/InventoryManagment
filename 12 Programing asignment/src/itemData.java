@@ -239,7 +239,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
         String descriptionAdd = "";
         float priceAdd = 1f;
         int stockAdd = 1;
-        try {
+        try {//takes user input
             Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
             System.out.println("Please enter the description of the item that you want to add:");
             descriptionAdd = input.nextLine();//takes input on the description of the item to add
@@ -255,6 +255,8 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                 inventory restart = new inventory();
                 restart.addItem();
             }
+
+
         }
         catch(java.util.InputMismatchException inputMismatchException){//If the user inputs the wrong datatype
             System.out.println("The entered information is was not valid. Please enter the amount you want to change the quntity by as a number");
@@ -277,35 +279,34 @@ class inventory{//Includes the methods which perform operations(update quntity, 
         catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
         catch(Exception unknownException){System.out.println("An unknown error has occured");}
 
-        try{//appends the new item to items.txt
+        try{//appends the new item to items.txt and the transaction record to transactions.txt
             FileWriter write = new FileWriter("items.txt", true);
             write.write(System.getProperty( "line.separator" ) + fullIdAdd + "," + descriptionAdd + "," + priceAdd + "," + stockAdd + "," + totalPriceAdd);//add the new item to items.txt
             write.close();//closes items.txt
             System.out.println("item added");
+
+            String fullIdAdd2 = "";
+            try (LineNumberReader lineNumReadTransactions = new LineNumberReader(new FileReader(new File("transactions.txt")))) {//adds the event log to transactions.txt
+                int idAdd2;
+                lineNumReadTransactions.skip(Long.MAX_VALUE);//skips to the last line in the text file
+                idAdd2 = lineNumReadTransactions.getLineNumber();//find the number of the last line then increamenet it by one to find the next line number
+                if(idAdd2 == 0){idAdd2++;}//if its the first item to be added to transactions.txt set its ID to 1
+
+                String[] numZeros = {"", "0000", "000","00", "0"};//Creates an array which adds the corresponding number of 0s depending on the ID length
+                String stringIdAdd = String.valueOf(idAdd2);//Converts idAdd to a string so the 0s can be added
+                fullIdAdd2 = numZeros[stringIdAdd.length()] + idAdd2;//Adds the 0s to the id ad stores it in the varibale fullIdAdd
+
+                FileWriter writeTransactions = new FileWriter("transactions.txt", true);//creates a FileWriter to append to transactions.txt
+                writeTransactions.write(System.getProperty( "line.separator" ) + fullIdAdd2 + "," + descriptionAdd + "," + "Null" + "," + stockAdd + "," + "AddItem");//add the log to transactions.txt
+                writeTransactions.close();//closes transactions.txt
+            }
+            catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
+            catch(SecurityException SecException){System.out.println("An error has occured. Check that this program has the correct permisions to write to items.txt and transactions.txt");}//catches exception for if items.txt or transactions.txt can not be writen to
+            catch(Exception unknownException){System.out.println("An unknown error has occured");}
         }
         catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
         catch(SecurityException SecException){System.out.println("An error has occured. Check that this program has the correct permisions to write to items.txt and transactions.txt");}//catches exception for if items.txt or transactions.txt can not be writen to
         catch(Exception unknownException){System.out.println("An unknown error has occured");}
-
-        String fullIdAdd2 = "";
-        try (LineNumberReader lineNumReadTransactions = new LineNumberReader(new FileReader(new File("transactions.txt")))) {//adds the event log to transactions.txt
-            int idAdd2;
-            lineNumReadTransactions.skip(Long.MAX_VALUE);//skips to the last line in the text file
-            idAdd2 = lineNumReadTransactions.getLineNumber();//find the number of the last line then increamenet it by one to find the next line number
-            if(idAdd2 == 0){idAdd2++;}//if its the first item to be added to transactions.txt set its ID to 1
-
-            String[] numZeros = {"", "0000", "000","00", "0"};//Creates an array which adds the corresponding number of 0s depending on the ID length
-            String stringIdAdd = String.valueOf(idAdd2);//Converts idAdd to a string so the 0s can be added
-            fullIdAdd2 = numZeros[stringIdAdd.length()] + idAdd2;//Adds the 0s to the id ad stores it in the varibale fullIdAdd
-
-            FileWriter writeTransactions = new FileWriter("transactions.txt", true);//creates a FileWriter to append to transactions.txt
-            writeTransactions.write(System.getProperty( "line.separator" ) + fullIdAdd2 + "," + descriptionAdd + "," + "Null" + "," + stockAdd + "," + "AddItem");//add the log to transactions.txt
-            writeTransactions.close();//closes transactions.txt
-        }
-        catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
-        catch(SecurityException SecException){System.out.println("An error has occured. Check that this program has the correct permisions to write to items.txt and transactions.txt");}//catches exception for if items.txt or transactions.txt can not be writen to
-        catch(Exception unknownException){System.out.println("An unknown error has occured");}
-
 
         System.out.println("\n-----------------------------------------------");
         String[] itemDataArgument = {""};//creates a string array to parse to main method
