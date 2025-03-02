@@ -2,6 +2,7 @@
 
 import java.io.*;
 import java.util.Scanner;//used to take user input
+import java.time.LocalDate;//used to get the current date
 
 
 public class itemData
@@ -42,6 +43,8 @@ public class itemData
         {
             if (userInput > 6 || userInput < 1) {//filters out invalid inputs
                 System.out.println("This doesn't appear to be a valid option...!");
+                String[] itemDataArgument = {""};//creates a string array to parse to main method
+                itemData.main(itemDataArgument);//returns to main method
                 break;
             }
             if (userInput == 1) {//calls UpdateQuntity if selected by the user
@@ -98,6 +101,12 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             String[] itemDataArgument = {""};//creates a string array to parse to main method
             itemData.main(itemDataArgument);//returns to main method
         }
+        if(magnitudeOfChange < 1){//makes sure that the user hasnt entered a number smaller than 1 to magnitude of change
+            System.out.println("Please enter a number that is bigger than 0\n" +
+                    "");
+            inventory restart = new inventory();//creates an object to restart updateQuntity
+            restart.updateQuntity();//restarts updateQuntity
+        }
 
         try {//Searches items.txt line by line for the string that the user inputed
             FileReader read = new FileReader("items.txt");
@@ -135,7 +144,6 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                 }
                 String quntityString = String.valueOf(quntity);//convert quntity to a string so that it can be added back into the text file
                 String updatedQuntity = values[0] + "," + values[1] + "," + values[2] + "," + quntityString + "," + values[4];//put all of the fields of the updated line back into one string
-
                 FileReader readTwo = new FileReader("items.txt");
                 BufferedReader buffReadTwo = new BufferedReader(readTwo);
 
@@ -149,9 +157,10 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                     } else if (lineNumTwo == lineNum & lineContentsTwo != null) {//if the line is the one with the updates quntity
                         newFileContents += updatedQuntity + "\n";//adds the updated line to newFileContents
                     }
-                    lineContentsTwo = buffRead.readLine();//sets the string LineContents to the contents of the next line
+                    lineContentsTwo = buffReadTwo.readLine();//sets the string LineContents to the contents of the next line
                     lineNumTwo++;
                 }
+
                 read.close();
                 readTwo.close();
                 PrintWriter updateFile = new PrintWriter("items.txt");
@@ -171,9 +180,10 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                     String[] numZeros = {"", "0000", "000","00", "0"};//Creates an array which adds the corresponding number of 0s depending on the ID length
                     String stringIdAdd = String.valueOf(idAdd);//Converts idAdd to a string so the 0s can be added
                     fullIdAdd = numZeros[stringIdAdd.length()] + idAdd;//Adds the 0s to the id ad stores it in the varibale fullIdAdd
+                    LocalDate date = LocalDate.now();//gets the current date
 
                     FileWriter writeTransactions = new FileWriter("transactions.txt", true);//creates a FileWriter to append to transactions.txt
-                    writeTransactions.write(System.getProperty("line.separator") + fullIdAdd + "," + values[1] + "," + plusOrMinus + magnitudeOfChange + "," + quntityString + "," + "QuntityUpdate");//add the log to transactions.txt
+                    writeTransactions.write(System.getProperty("line.separator") + fullIdAdd + "," + values[1] + "," + plusOrMinus + magnitudeOfChange + "," + quntityString + "," + "QuntityUpdate" + "," + date);//add the log to transactions.txt
                     writeTransactions.close();//closes transactions.txt
                 } catch (FileNotFoundException fileNotFound) {
                     System.out.println("Couldn't find items.txt/transactions.txt");
@@ -188,6 +198,8 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             }
             else {
                 System.out.print("item not found");
+                String[] itemDataArgument = {""};//creates a string array to parse to main method
+                itemData.main(itemDataArgument);//returns to main method
             }
         } catch (FileNotFoundException fileNotFound) {
             System.out.println("Couldn't find items.txt/transactions.txt");
@@ -207,7 +219,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
     public void search() {//searches for and displays details about an item
         Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
         System.out.println("Please enter the description of the item that you want to search for:");
-        String productdescriptionSearch = input.nextLine();//takes input from the user as to what item they want to search for
+        String productDescriptionSearch = input.nextLine();//takes input from the user as to what item they want to search for
 
         try {//Searches items.txt line by line for the string that the user inputed
             FileReader read = new FileReader("items.txt");
@@ -216,7 +228,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             boolean wasFound = false;//will store weather the string was found
             while (lineContents != null)//while line is not empty
             {//goes through  each line of items.txt searching for the string that the user entered untill an empty line is hit or the string is found
-                if (lineContents.contains("," + productdescriptionSearch + ",")) {
+                if (lineContents.contains("," + productDescriptionSearch + ",")) {
                     wasFound = true;
                     break;
                 }
@@ -250,10 +262,20 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             System.out.println("What is the current stocklevel of the item that you are adding:");
             stockAdd = input.nextInt();//takes input on the current stocklevel of the item to add
 
-            if(descriptionAdd.contains(",")){
+            if(descriptionAdd.contains(",")) {//makes sure that an item description containing a comma cant be added to tiems.txt
                 System.out.println("Item descrptions can't include commas\n");
-                inventory restart = new inventory();
-                restart.addItem();
+                inventory restart = new inventory();//creates an object to restart addItem
+                restart.addItem();//restarts add item
+            }
+            if(priceAdd < 0) {//makes sure the user hasnt entered a negitive price
+                System.out.println("price can not be negitive\n");
+                inventory restart2 = new inventory();//creates an object to restart addItem
+                restart2.addItem();//restarts add item
+            }
+            if(stockAdd < 0){//makes sure that the stock level the user inputed isnt negitive
+                System.out.println("stock level can not be negitive\n");
+                inventory restart3 = new inventory();//creates an object to restart addItem
+                restart3.addItem();//restarts add item
             }
 
 
@@ -283,7 +305,6 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             FileWriter write = new FileWriter("items.txt", true);
             write.write(System.getProperty( "line.separator" ) + fullIdAdd + "," + descriptionAdd + "," + priceAdd + "," + stockAdd + "," + totalPriceAdd);//add the new item to items.txt
             write.close();//closes items.txt
-            System.out.println("item added");
 
             String fullIdAdd2 = "";
             try (LineNumberReader lineNumReadTransactions = new LineNumberReader(new FileReader(new File("transactions.txt")))) {//adds the event log to transactions.txt
@@ -295,10 +316,12 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                 String[] numZeros = {"", "0000", "000","00", "0"};//Creates an array which adds the corresponding number of 0s depending on the ID length
                 String stringIdAdd = String.valueOf(idAdd2);//Converts idAdd to a string so the 0s can be added
                 fullIdAdd2 = numZeros[stringIdAdd.length()] + idAdd2;//Adds the 0s to the id ad stores it in the varibale fullIdAdd
+                LocalDate date = LocalDate.now();//gets the current date
 
                 FileWriter writeTransactions = new FileWriter("transactions.txt", true);//creates a FileWriter to append to transactions.txt
-                writeTransactions.write(System.getProperty( "line.separator" ) + fullIdAdd2 + "," + descriptionAdd + "," + "Null" + "," + stockAdd + "," + "AddItem");//add the log to transactions.txt
+                writeTransactions.write(System.getProperty( "line.separator" ) + fullIdAdd2 + "," + descriptionAdd + "," + "Null" + "," + stockAdd + "," + "AddItem" + "," + date);//add the log to transactions.txt
                 writeTransactions.close();//closes transactions.txt
+                System.out.println("item added");
             }
             catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
             catch(SecurityException SecException){System.out.println("An error has occured. Check that this program has the correct permisions to write to items.txt and transactions.txt");}//catches exception for if items.txt or transactions.txt can not be writen to
@@ -322,28 +345,34 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             BufferedReader buffRead = new BufferedReader(read);
             String lineContents = buffRead.readLine();//creates LineContents which stores the contents of each line
             boolean wasFound = false;//will store weather the string was found
-            int LineNum = 0;//will store the number of the line which is currently being looked through / the string was found in
+            int lineNum = 0;//will store the number of the line which is currently being looked through / the string was found in
             while (lineContents != null)//while line is not empty
             {//goes through  each line of items.txt searching for the string that the user entered untill an empty line is hit or the string is found
-                LineNum++;//increament LineNum to the current line being examined
                 if (lineContents.contains("," + descriptionRemove + ",")) {
                     wasFound = true;
                     break;
                 }
                 lineContents = buffRead.readLine();//sets LineContents to the contents of the next line
+                lineNum++;//increament LineNum to the current line being examined
             }
             if(wasFound == true){//if the string was found rewrite the file without the line that the user wants to remove
-                BufferedReader buffRead2 = new BufferedReader(read);
-                String newFileContents = "";//String used to hold the file contents - the line that is being removed
+                FileReader read2 = new FileReader("items.txt");
+                BufferedReader buffRead2 = new BufferedReader(read2);
+                String lineContents2 = buffRead2.readLine();//sets the string LineContents2 to the contents of the line
+                String newFileContents = "\n";//String used to hold the file contents - the line that is being removed
                 int lineNum2 = 1;
-                while (lineContents != null) {//while lines with text are still being read
-                    lineContents = buffRead.readLine();//sets the string LineContents to the contents of the line
-                    if(LineNum != lineNum2 & lineContents != null)//if the current line being examined isn't the one to remove add it to NewFileContents
+                while (lineContents2 != null) {//while lines with text are still being read
+                    lineContents2 = buffRead2.readLine();//sets the string LineContents2 to the contents of the line
+                    if(lineNum != lineNum2 & lineContents2 != null)//if the current line being examined isn't the one to remove add it to NewFileContents
                     {
-                        newFileContents += lineContents + "\n";//add the current line being examined to NewFileContents
+                        newFileContents += lineContents2 + "\n";//add the current line being examined to NewFileContents
                     }
+                    System.out.println(lineNum);
+                    System.out.println(lineNum2);
+                    lineNum2++;
                 }
                 read.close();
+                read2.close();
                 PrintWriter updateFile = new PrintWriter("items.txt");
                 updateFile.println(newFileContents);//Replaces the pre-existing contents of the file with the contents of the file minus the line selected by the user
                 updateFile.close();
@@ -359,9 +388,10 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                     String[] numZeros = {"", "0000", "000","00", "0"};//Creates an array which adds the corresponding number of 0s depending on the ID length
                     String stringIdAdd = String.valueOf(idAdd);//Converts idAdd to a string so the 0s can be added
                     fullIdAdd = numZeros[stringIdAdd.length()] + idAdd;//Adds the 0s to the id ad stores it in the varibale fullIdAdd
+                    LocalDate date = LocalDate.now();//gets the current date
 
                     FileWriter writeTransactions = new FileWriter("transactions.txt", true);//creates a FileWriter to append to transactions.txt
-                    writeTransactions.write(System.getProperty( "line.separator" ) + fullIdAdd + "," + descriptionRemove + "," + "Null" + "," + "Null" + "," + "RemoveItem");//add the log to transactions.txt
+                    writeTransactions.write(System.getProperty( "line.separator" ) + fullIdAdd + "," + descriptionRemove + "," + "Null" + "," + "Null" + "," + "RemoveItem" + "," + date);//add the log to transactions.txt
                     writeTransactions.close();//closes transactions.txt
                 }
                 catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
@@ -385,10 +415,16 @@ class tranInfo{
         try {//Prints the contents of the daily transactions report to the user
             FileReader read = new FileReader("transactions.txt");
             BufferedReader buffRead = new BufferedReader(read);
-            System.out.println("ID, Description, QuntityChange, StockRemaining, TransactionType");
+            System.out.println("ID, Description, QuntityChange, StockRemaining, TransactionType, Date");
             String lineContents = buffRead.readLine();//creates a variable called LineContents to store the contents of the current line untill the end of the test is hit
+            lineContents = buffRead.readLine();//Skips the first line of transactions.txt as this will be empty
             while (lineContents != null) {//while we are still proccesing lines with text
-                System.out.println(lineContents);//creates LineContents which stores the contents of each line
+                String[] values = lineContents.split("\\s*,\\s*");//splits the current line being examined into a string array
+                LocalDate date = LocalDate.now();//gets the current date
+                String strDate = String.valueOf(date);//converts the date into a string
+                if(values[5].equals(strDate)){//if the record is for the current date
+                    System.out.println(lineContents);//Prints the contents of the line
+                }
                 lineContents = buffRead.readLine();//set lineContents value to the contents of the next line to be examined
             }
         }

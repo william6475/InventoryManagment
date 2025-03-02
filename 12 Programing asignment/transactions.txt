@@ -1,28 +1,7 @@
 
-1,banana,StockIncrease: 6,17,QuntityUpdate
-2,banana,StockIncrease: 3,20,QuntityUpdate
-3,banana,Sold: 2,18,QuntityUpdate
-4,pomegrannite,Null,7,AddItem
-5,banana,StockIncrease: 3,21,QuntityUpdate
-6,banana,Null,3,AddItem
-7,apple,Null,3,AddItem
-8,banana,StockIncrease: 4,25,QuntityUpdate
-9,banana,StockIncrease: 5,30,QuntityUpdate
-10,banana,Sold: 2,28,QuntityUpdate
-11,DragonFruit,Null,3,AddItem
-12,banana,StockIncrease: 2,30,QuntityUpdate
-13,pomegranite,Null,8,AddItem
-14,banana,Null,2,AddItem
-15,apple,Null,2,AddItem
-16,pear,Null,6,AddItem
-17,banana,StockIncrease: 2,4,QuntityUpdate
-18,tambourine,Null,3,AddItem
-19,to,Null,3,AddItem
-20,to,Null,Null,RemoveItem
-21,grapes,Null,6,AddItem
-22,grapes,Null,7,AddItem
-23,grapes,Null,9,AddItem
-00024,banana,Null,2,AddItem
-00025,peir,Null,2222,AddItem
-00026,banana,Sold: 1,1,QuntityUpdate
-00027,pomegranite,Null,7,AddItem
+00001,banana,StockIncrease: 4,5,QuntityUpdate,2025-03-02
+00002,banana,StockIncrease: 2,7,QuntityUpdate,2025-03-02
+00003,peirs,Null,2,AddItem,2025-03-02
+00004,peirs,StockIncrease: 2,4,QuntityUpdate,2025-03-02
+00005,peirs,StockIncrease: 2,6,QuntityUpdate,2025-03-02
+00006,peirs,Null,Null,RemoveItem,2025-03-02
