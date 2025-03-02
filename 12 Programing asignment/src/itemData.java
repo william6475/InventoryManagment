@@ -1,6 +1,7 @@
 //Inventory managment system
 
 import java.io.*;
+import java.time.DateTimeException;
 import java.util.Scanner;//used to take user input
 import java.time.LocalDate;//used to get the current date
 
@@ -191,6 +192,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                 catch (SecurityException SecException) {
                     System.out.println("An error has occured. Check that this program has the correct permisions to write to items.txt and transactions.txt");
                 }//catches exception for if items.txt or transactions.txt can not be writen to
+                catch(DateTimeException dateTimeExcetpion){System.out.println("Error retriving data");}
                 catch (Exception unknownException) {
                     System.out.println("An unknown error has occured");
                 }
@@ -325,6 +327,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             }
             catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
             catch(SecurityException SecException){System.out.println("An error has occured. Check that this program has the correct permisions to write to items.txt and transactions.txt");}//catches exception for if items.txt or transactions.txt can not be writen to
+            catch(DateTimeException dateTimeExcetpion){System.out.println("Error retriving data");}
             catch(Exception unknownException){System.out.println("An unknown error has occured");}
         }
         catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
@@ -396,6 +399,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                 }
                 catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
                 catch(SecurityException SecException){System.out.println("An error has occured. Check that this program has the correct permisions to write to items.txt and transactions.txt");}//catches exception for if items.txt or transactions.txt can not be writen to
+                catch(DateTimeException dateTimeExcetpion){System.out.println("Error retriving data");}
                 catch(Exception unknownException){System.out.println("An unknown error has occured");}
             }
             else{System.out.print("item not found");}
@@ -429,6 +433,7 @@ class tranInfo{
             }
         }
         catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
+        catch(DateTimeException dateTimeExcetpion){System.out.println("Error retriving data");}
         catch(Exception unknownException){System.out.println("An unknown error has occured");}
 
         System.out.println("\n-----------------------------------------------");
