@@ -1,6 +1,6 @@
 //Inventory managment system
 
-import java.io.*;
+import java.io.*;//used to read and write text files
 import java.time.DateTimeException;
 import java.util.Scanner;//used to take user input
 import java.time.LocalDate;//used to get the current date
@@ -9,7 +9,7 @@ import java.time.LocalDate;//used to get the current date
 public class itemData
 {//contains the main method
     public static void main(String args[])
-    {//Used as a menu for when the program is started/after a user has completed an action and to create the items txt file if not already created
+    {//Used as a menu for when the program is started/after a user has completed an action and to create the items.txt and transactions.txt if not already created
 
         File itemsObj = new File("items");
         try{itemsObj.createNewFile();}//Try to create the items file(if it already exists this will be ignored)
@@ -25,6 +25,7 @@ public class itemData
         inventory callInventory = new inventory();//creates an object to run the methods inside of the inventory class
         tranInfo callTranInfo = new tranInfo();//create an object to run method(s) inside of the transactionInfo class
 
+        System.out.println("\n-----------------------------------------------");
         System.out.println("I N V E N T O R Y    M A N A G E M E N T    S Y S T E M");
         System.out.println("-----------------------------------------------");
         System.out.println("1. UPDATE QUANTITY OF EXISTING ITEM");
@@ -40,35 +41,36 @@ public class itemData
             int userInput = input.nextInt();//takes user input for what option they want to choose
 
 
-        while(userInput !=6)//while user input isnt 6(exit)
-        {
-            if (userInput > 6 || userInput < 1) {//filters out invalid inputs
-                System.out.println("This doesn't appear to be a valid option...!");
-                String[] itemDataArgument = {""};//creates a string array to parse to main method
-                itemData.main(itemDataArgument);//returns to main method
-                break;
+            while(userInput !=6)//while user input isn't 6(exit)
+            {
+                if (userInput > 6 || userInput < 1) {//filters out invalid inputs
+                    System.out.println("This doesn't appear to be a valid option...!");
+                    String[] itemDataArgument = {""};//creates a string array to parse to main method
+                    itemData.main(itemDataArgument);//returns to main method
+                    break;
+                }
+                if (userInput == 1) {//calls updateQuntity if selected by the user
+                    System.out.println("Update Quntity");
+                    callInventory.updateQuntity();
+                    break;
+                } else if (userInput == 2) {//calls Search if selected by the user
+                    System.out.println("Search");
+                    callInventory.search();
+                    break;
+                } else if (userInput == 3) {//calls dailyReport if selected by the user
+                    System.out.println("Daily report");
+                    callTranInfo.dailyReport();
+                    break;
+                } else if (userInput == 4) {//calls addItem if selected by the user
+                    System.out.println("Add item");
+                    callInventory.addItem();
+                    break;
+                } else if (userInput == 5) {//calls removeItem if selected by the user
+                    System.out.println("Remove item");
+                    callInventory.removeItem();
+                    break;
+                }
             }
-            if (userInput == 1) {//calls UpdateQuntity if selected by the user
-                callInventory.updateQuntity();
-                break;
-            } else if (userInput == 2) {//calls Search if selected by the user
-                System.out.println("Search");
-                callInventory.search();
-                break;
-            } else if (userInput == 3) {//calls DailyReport if selected by the user
-                System.out.println("Daily report");
-                callTranInfo.dailyReport();
-                break;
-            } else if (userInput == 4) {//calls AddItem if selected by the user
-                System.out.println("Add item");
-                callInventory.addItem();
-                break;
-            } else if (userInput == 5) {//calls RemoveItem if selected by the user
-                System.out.println("Remove item");
-                callInventory.removeItem();
-                break;
-            }
-        }
 
 
             System.out.println("\n\n Thanks for using this program...!");
@@ -80,7 +82,7 @@ public class itemData
         }
     }
 }
-class inventory{//Includes the methods which perform operations(update quntity, search, daily report, add item, remove item)
+class inventory{//Includes the methods which perform operations based around items.txt(update quntity, search, add item, remove item)
     public void updateQuntity(){//updates the quntity of an item
         String productUpdatedescription = "";
         String increaseOrDecrease = "";
@@ -102,7 +104,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             String[] itemDataArgument = {""};//creates a string array to parse to main method
             itemData.main(itemDataArgument);//returns to main method
         }
-        if(magnitudeOfChange < 1){//makes sure that the user hasnt entered a number smaller than 1 to magnitude of change
+        if(magnitudeOfChange < 1){//makes sure that the user hasn't entered a number smaller than 1 into magnitude of change
             System.out.println("Please enter a number that is bigger than 0\n" +
                     "");
             inventory restart = new inventory();//creates an object to restart updateQuntity
@@ -116,14 +118,14 @@ class inventory{//Includes the methods which perform operations(update quntity, 
             boolean wasFound = false;//will store weather the string was found
             int lineNum = 1;//will store the line number of the line that will be updated
             while (lineContents != null)//while line is not empty
-                {//goes through  each line of items.txt searching for the string that the user entered untill an empty line is hit or the string is found
-                    if (lineContents.contains("," + productUpdatedescription + ",")) {
-                        wasFound = true;
-                        break;
-                    }
-                    lineContents = buffRead.readLine();//sets LineContents to the contents of the next line
-                    lineNum++;//updates the line number to the new line
+            {//goes through  each line of items.txt searching for the string that the user entered until an empty line is hit or the string is found
+                if (lineContents.contains("," + productUpdatedescription + ",")) {
+                    wasFound = true;
+                    break;
                 }
+                lineContents = buffRead.readLine();//sets LineContents to the contents of the next line
+                lineNum++;//updates the line number to the new line
+            }
             if (wasFound == true) {//if the descriptione was found then atempt to update the item quntity
                 String[] values = lineContents.split("\\s*,\\s*");//puts each of the lines values into an array
                 int quntity = Integer.parseInt(values[3]);//set quntity to the stocklevel in integer form
@@ -144,7 +146,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                         break;
                 }
                 String quntityString = String.valueOf(quntity);//convert quntity to a string so that it can be added back into the text file
-                String updatedQuntity = values[0] + "," + values[1] + "," + values[2] + "," + quntityString + "," + values[4];//put all of the fields of the updated line back into one string
+                String updatedQuntity = values[0] + "," + values[1] + "," + values[2] + "," + quntityString + "," + values[4];//put all fields of the updated line back into one string
                 FileReader readTwo = new FileReader("items.txt");
                 BufferedReader buffReadTwo = new BufferedReader(readTwo);
 
@@ -154,9 +156,11 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                 while (lineContentsTwo != null) {//while lines with text are still being read
                     if (lineNumTwo != lineNum & lineContentsTwo != null)//if the current line being examined isn't the one that we updated
                     {
-                        newFileContents += lineContentsTwo + "\n";//add the current line being examined to newFileContents
+                        if(lineNumTwo!= 1){newFileContents += "\n";}//starts a new line if it is not the first line with content
+                        newFileContents += lineContentsTwo;//add the current line being examined to newFileContents
                     } else if (lineNumTwo == lineNum & lineContentsTwo != null) {//if the line is the one with the updates quntity
-                        newFileContents += updatedQuntity + "\n";//adds the updated line to newFileContents
+                        if(lineNumTwo!= 1){newFileContents += "\n";}//starts a new line if it is not the first line with content
+                        newFileContents += updatedQuntity;//adds the updated line to newFileContents
                     }
                     lineContentsTwo = buffReadTwo.readLine();//sets the string LineContents to the contents of the next line
                     lineNumTwo++;
@@ -165,7 +169,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                 read.close();
                 readTwo.close();
                 PrintWriter updateFile = new PrintWriter("items.txt");
-                updateFile.println(newFileContents);//Replaces the pre-existing contents of the file with the contents of the file minus the line selected by the user
+                updateFile.print(newFileContents);//Replaces the pre-existing contents of the file with the contents of the file minus the line selected by the user
                 updateFile.close();
                 System.out.println("Item quntity updated succesfully");
 
@@ -176,7 +180,7 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                     idAdd = lineNumReadTransactions.getLineNumber();//find the number of the last line then increamenet it by one to find the next line number
                     if (idAdd == 0) {
                         idAdd++;
-                    }//if its the first item to be added to transactions.txt set its ID to 1
+                    }//if it's the first item to be added to transactions.txt set its ID to 1
 
                     String[] numZeros = {"", "0000", "000","00", "0"};//Creates an array which adds the corresponding number of 0s depending on the ID length
                     String stringIdAdd = String.valueOf(idAdd);//Converts idAdd to a string so the 0s can be added
@@ -212,13 +216,13 @@ class inventory{//Includes the methods which perform operations(update quntity, 
         catch (Exception unknownException) {
             System.out.println("An unknown error has occured");
         }
-        System.out.println("\n-----------------------------------------------");
+
         String[] itemDataArgument = {""};//creates a string array to parse to main method
         itemData.main(itemDataArgument);//returns to main method
 
 
     }
-    public void search() {//searches for and displays details about an item
+    public void search() {//searches for and displays stored inforamtion about an item
         Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
         System.out.println("Please enter the description of the item that you want to search for:");
         String productDescriptionSearch = input.nextLine();//takes input from the user as to what item they want to search for
@@ -244,12 +248,10 @@ class inventory{//Includes the methods which perform operations(update quntity, 
         catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found
         catch(Exception unknownException){System.out.println("An unknown error has occured");}
 
-
-        System.out.println("\n-----------------------------------------------");
         String[] itemDataArgument = {""};//creates a string array to parse to main method
         itemData.main(itemDataArgument);//returns to main method
     }
-    public void addItem() {//adds an item catagory to the database
+    public void addItem() {//adds an item type to items.txt
         String descriptionAdd = "";
         float priceAdd = 1f;
         int stockAdd = 1;
@@ -334,11 +336,10 @@ class inventory{//Includes the methods which perform operations(update quntity, 
         catch(SecurityException SecException){System.out.println("An error has occured. Check that this program has the correct permisions to write to items.txt and transactions.txt");}//catches exception for if items.txt or transactions.txt can not be writen to
         catch(Exception unknownException){System.out.println("An unknown error has occured");}
 
-        System.out.println("\n-----------------------------------------------");
         String[] itemDataArgument = {""};//creates a string array to parse to main method
         itemData.main(itemDataArgument);//returns to main method
     }
-    public void removeItem() {//removes an item catagory from the database
+    public void removeItem() {//removes an item catagory from items.txt
         Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
         System.out.println("Please enter the description of the item that you wish to remove:");
         String descriptionRemove = input.nextLine();//takes the user input of the description of the item to remove
@@ -370,8 +371,6 @@ class inventory{//Includes the methods which perform operations(update quntity, 
                     {
                         newFileContents += lineContents2 + "\n";//add the current line being examined to NewFileContents
                     }
-                    System.out.println(lineNum);
-                    System.out.println(lineNum2);
                     lineNum2++;
                 }
                 read.close();
@@ -409,14 +408,13 @@ class inventory{//Includes the methods which perform operations(update quntity, 
         catch(SecurityException SecException){System.out.println("An error has occured. Check that this program has the correct permisions to write to items.txt and transactions.txt");}//catches exception for if items.txt or transactions.txt can not be writen to
         catch(Exception unknownException){System.out.println("An unknown error has occured");}
 
-        System.out.println("\n-----------------------------------------------");
         String[] itemDataArgument = {""};//creates a string array to parse to main method
         itemData.main(itemDataArgument);//returns to main method
     }
 }
-class tranInfo{
-    public void dailyReport() {//creates a daily report for the actions which have taken place in the current day
-        try {//Prints the contents of the daily transactions report to the user
+class tranInfo{//contans the method which is based around transactions.txt(dailyReport)
+    public void dailyReport() {//Finds and displays transactions for the current day
+        try {//Prints this days transactions to the user from transactions.txt
             FileReader read = new FileReader("transactions.txt");
             BufferedReader buffRead = new BufferedReader(read);
             System.out.println("ID, Description, QuntityChange, StockRemaining, TransactionType, Date");
@@ -436,7 +434,6 @@ class tranInfo{
         catch(DateTimeException dateTimeExcetpion){System.out.println("Error retriving data");}
         catch(Exception unknownException){System.out.println("An unknown error has occured");}
 
-        System.out.println("\n-----------------------------------------------");
         String[] itemDataArgument = {""};//creates a string array to parse to main method
         itemData.main(itemDataArgument);//returns to main method
     }
