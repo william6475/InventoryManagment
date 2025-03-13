@@ -40,6 +40,7 @@ public class itemData
             System.out.print("\n Enter a choice and Press ENTER to continue[1-6]:");
             int userInput = input.nextInt();//takes user input for what option they want to choose
 
+            if(userInput == 6){System.out.println("\n\n Thanks for using this program...!");}
 
             while(userInput !=6)//while user input isn't 6(exit)
             {
@@ -71,9 +72,6 @@ public class itemData
                     break;
                 }
             }
-
-
-            System.out.println("\n\n Thanks for using this program...!");
         }
         catch(java.util.InputMismatchException inputMismatchException){//If the user inputs the wrong datatype
             System.out.println("The entered information is was not valid. Please enter a number from 1-6");
@@ -241,7 +239,10 @@ class inventory{//Includes the methods which perform operations based around ite
                 lineContents = buffRead.readLine();//sets LineContents to the contents of the next line
             }
             read.close();
-            if(wasFound == true){System.out.println(lineContents);}//if the string was found then print the contents of the line that it was found in
+            if(wasFound == true){//if the string was found then print the contents of the line that it was found in
+                System.out.println("\nitem ID, Desctiption, Price(£), Stock, Total price(£)");
+                System.out.println(lineContents);
+            }
             else{System.out.print("item not found");}
 
         }
@@ -363,20 +364,21 @@ class inventory{//Includes the methods which perform operations based around ite
                 FileReader read2 = new FileReader("items.txt");
                 BufferedReader buffRead2 = new BufferedReader(read2);
                 String lineContents2 = buffRead2.readLine();//sets the string LineContents2 to the contents of the line
-                String newFileContents = "\n";//String used to hold the file contents - the line that is being removed
+                String newFileContents = "";//String used to hold the file contents - the line that is being removed
                 int lineNum2 = 1;
                 while (lineContents2 != null) {//while lines with text are still being read
                     lineContents2 = buffRead2.readLine();//sets the string LineContents2 to the contents of the line
                     if(lineNum != lineNum2 & lineContents2 != null)//if the current line being examined isn't the one to remove add it to NewFileContents
                     {
-                        newFileContents += lineContents2 + "\n";//add the current line being examined to NewFileContents
+                        newFileContents +=  "\n" + lineContents2;//add the current line being examined to NewFileContents
                     }
+                    else if(lineNum == lineNum2){newFileContents += "\nRemoved";}//adds Null to where the removed item was to prevent false IDs being generated when adding items
                     lineNum2++;
                 }
                 read.close();
                 read2.close();
                 PrintWriter updateFile = new PrintWriter("items.txt");
-                updateFile.println(newFileContents);//Replaces the pre-existing contents of the file with the contents of the file minus the line selected by the user
+                updateFile.print(newFileContents);//Replaces the pre-existing contents of the file with the contents of the file minus the line selected by the user
                 updateFile.close();
                 System.out.println("item removed");
 
@@ -401,7 +403,7 @@ class inventory{//Includes the methods which perform operations based around ite
                 catch(DateTimeException dateTimeExcetpion){System.out.println("Error retriving data");}
                 catch(Exception unknownException){System.out.println("An unknown error has occured");}
             }
-            else{System.out.print("item not found");}
+            else{System.out.println("item not found");}
 
         }
         catch(FileNotFoundException fileNotFound){System.out.println("Couldn't find items.txt/transactions.txt");}//Catches exception for if a file can not be found

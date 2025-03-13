@@ -112,3 +112,48 @@
 00111,banana,StockIncrease: 1,25,QuntityUpdate,2025-03-10
 00112,banana,StockIncrease: 1,26,QuntityUpdate,2025-03-10
 00113,banana,StockIncrease: 2,28,QuntityUpdate,2025-03-12
+00114,asd,Null,3,AddItem,2025-03-13
+00115,asd,Null,3,AddItem,2025-03-13
+00116,asd,Null,Null,RemoveItem,2025-03-13
+00117,sdfsdf,Null,2,AddItem,2025-03-13
+00118,apple,Null,Null,RemoveItem,2025-03-13
+00119,apple,Null,2,AddItem,2025-03-13
+00120,fruits,Null,6,AddItem,2025-03-13
+00121,apple,Null,3,AddItem,2025-03-13
+00122,fuits,Null,3,AddItem,2025-03-13
+00123,apple,Null,Null,RemoveItem,2025-03-13
+00124,apple,Null,1,AddItem,2025-03-13
+00125,fuits,Null,Null,RemoveItem,2025-03-13
+00126,peir,Null,Null,RemoveItem,2025-03-13
+00127,apple,Null,3,AddItem,2025-03-13
+00128,peir,Null,5,AddItem,2025-03-13
+00129,fruits,Null,2,AddItem,2025-03-13
+00130,banana,StockIncrease: 1,29,QuntityUpdate,2025-03-13
+00131,banana,StockIncrease: 1,30,QuntityUpdate,2025-03-13
+00132,banana,StockIncrease: 1,31,QuntityUpdate,2025-03-13
+00133,banana,StockIncrease: 1,32,QuntityUpdate,2025-03-13
+00134,banana,StockIncrease: 1,33,QuntityUpdate,2025-03-13
+00135,banana,StockIncrease: 1,34,QuntityUpdate,2025-03-13
+00136,banana,StockIncrease: 1,35,QuntityUpdate,2025-03-13
+00137,banana,StockIncrease: 1,36,QuntityUpdate,2025-03-13
+00138,banana,StockIncrease: 1,37,QuntityUpdate,2025-03-13
+00139,banana,StockIncrease: 1,38,QuntityUpdate,2025-03-13
+00140,banana,StockIncrease: 1,39,QuntityUpdate,2025-03-13
+00141,banana,StockIncrease: 1,40,QuntityUpdate,2025-03-13
+00142,banana,StockIncrease: 1,41,QuntityUpdate,2025-03-13
+00143,banana,StockIncrease: 1,42,QuntityUpdate,2025-03-13
+00144,peir,Null,Null,RemoveItem,2025-03-13
+00145,peir,Null,3,AddItem,2025-03-13
+00146,peir,Null,Null,RemoveItem,2025-03-13
+00147,peir,Null,Null,RemoveItem,2025-03-13
+00148,apple,Null,Null,RemoveItem,2025-03-13
+00149,appple,Null,2,AddItem,2025-03-13
+00150,apple,Null,Null,RemoveItem,2025-03-13
+00151,peir,Null,Null,RemoveItem,2025-03-13
+00152,apple,Null,Null,RemoveItem,2025-03-13
+00153,peir,Null,1,AddItem,2025-03-13
+00154,apple,Null,1,AddItem,2025-03-13
+00155,apple,Null,Null,RemoveItem,2025-03-13
+00156,peir,Null,Null,RemoveItem,2025-03-13
+00157,apple,Null,1,AddItem,2025-03-13
+00158,peir,Null,1,AddItem,2025-03-13
