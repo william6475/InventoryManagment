@@ -87,7 +87,6 @@ class inventory{//Includes the methods which perform operations based around ite
         int magnitudeOfChange = 34;
         try {//take user input
             Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
-            System.out.println("Update quntity");
             System.out.println("Please enter the description of the product to update the quntity of:");
             productUpdatedescription = input.nextLine();//takes the input of the description of the product that the user wants to update the quntity of
 

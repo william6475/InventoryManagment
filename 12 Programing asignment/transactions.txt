@@ -157,3 +157,8 @@
 00156,peir,Null,Null,RemoveItem,2025-03-13
 00157,apple,Null,1,AddItem,2025-03-13
 00158,peir,Null,1,AddItem,2025-03-13
+00159,banana,StockIncrease: 1,29,QuntityUpdate,2025-03-13
+00160,fruityyy,Null,3,AddItem,2025-03-13
+00161,banana,StockIncrease: 1,30,QuntityUpdate,2025-03-15
+00162,grapes,Null,34,AddItem,2025-03-15
+00163,grapes,Null,Null,RemoveItem,2025-03-15
