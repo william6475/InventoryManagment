@@ -5,11 +5,15 @@ import java.time.DateTimeException;
 import java.util.Scanner;//used to take user input
 import java.time.LocalDate;//used to get the current date
 
-
-public class itemData
-{//contains the main method
-    public static void main(String args[])
-    {//Used as a menu for when the program is started/after a user has completed an action and to create the items.txt and transactions.txt if not already created
+/**
+ * Contains the main method
+ */
+public class itemData {
+    /**
+     * Used as a menu for when the program is started/after a user has completed an action and to create the items.txt and transactions.txt if not already created
+     * @param args
+     */
+    public static void main(String args[]) {
 
         File itemsObj = new File("items");
         try{itemsObj.createNewFile();}//Try to create the items file(if it already exists this will be ignored)
@@ -80,8 +84,15 @@ public class itemData
         }
     }
 }
-class inventory{//Includes the methods which perform operations based around items.txt(update quntity, search, add item, remove item)
-    public void updateQuntity(){//updates the quntity of an item
+
+/**
+ * //Includes the methods which perform operations based around items.txt(update quntity, search, add item, remove item)
+ */
+class inventory{
+    /**
+     * updates the quntity of an item
+     */
+    public void updateQuntity(){
         String productUpdatedescription = "";
         String increaseOrDecrease = "";
         int magnitudeOfChange = 34;
@@ -219,7 +230,11 @@ class inventory{//Includes the methods which perform operations based around ite
 
 
     }
-    public void search() {//searches for and displays stored inforamtion about an item
+
+    /**
+     * searches for and displays stored inforamtion about an item
+     */
+    public void search() {
         Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
         System.out.println("Please enter the description of the item that you want to search for:");
         String productDescriptionSearch = input.nextLine();//takes input from the user as to what item they want to search for
@@ -251,7 +266,11 @@ class inventory{//Includes the methods which perform operations based around ite
         String[] itemDataArgument = {""};//creates a string array to parse to main method
         itemData.main(itemDataArgument);//returns to main method
     }
-    public void addItem() {//adds an item type to items.txt
+
+    /**
+     * adds an item type to items.txt
+     */
+    public void addItem() {
         String descriptionAdd = "";
         float priceAdd = 1f;
         int stockAdd = 1;
@@ -339,7 +358,11 @@ class inventory{//Includes the methods which perform operations based around ite
         String[] itemDataArgument = {""};//creates a string array to parse to main method
         itemData.main(itemDataArgument);//returns to main method
     }
-    public void removeItem() {//removes an item catagory from items.txt
+
+    /**
+     * removes an item catagory from items.txt
+     */
+    public void removeItem() {
         Scanner input = new Scanner(System.in);//creates a scanner object to take user input with
         System.out.println("Please enter the description of the item that you wish to remove:");
         String descriptionRemove = input.nextLine();//takes the user input of the description of the item to remove
@@ -413,8 +436,15 @@ class inventory{//Includes the methods which perform operations based around ite
         itemData.main(itemDataArgument);//returns to main method
     }
 }
-class tranInfo{//contans the method which is based around transactions.txt(dailyReport)
-    public void dailyReport() {//Finds and displays transactions for the current day
+
+/**
+ * contans the methods which are based around transactions.txt(dailyReport)
+ */
+class tranInfo{
+    /**
+     * Finds and displays transactions for the current day
+     */
+    public void dailyReport() {
         try {//Prints this days transactions to the user from transactions.txt
             FileReader read = new FileReader("transactions.txt");
             BufferedReader buffRead = new BufferedReader(read);
